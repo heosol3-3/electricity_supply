@@ -5,12 +5,9 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>제품문의 | 문의하기 | 삼성전기</title>
-<meta name="description" content="samsung electronic">
-<meta name="keywords" content="samsung electronic">
-<meta name="author" content="samsung electronic by heosol">
 <link rel="stylesheet" href="css/import.css">
 <link rel="stylesheet" href="css/sub1.css">
-<script defer src="js/sub1.js"></script>
+<script src="js/sub1.js"></script>
 </head>
 <body>
 <!-- 본문바로가기 -->
@@ -19,7 +16,6 @@
 <div id="wrap">
   <!-- header -->
   <div id="header">
-    
   </div>
   <!-- //header -->
   <hr />
@@ -183,7 +179,7 @@
               <label for="not_kid">만 14세 이상입니다.</label>
             </p>
           </div>
-          <input type="submit" value="접수하기" title="접수하기 바로가기" />  
+          <input type="submit" value="접수하기" name="" id="" title="접수하기 바로가기" />  
         </fieldset>
         </form>
       </div>
@@ -194,18 +190,17 @@
   <hr />
   <!-- footer -->
   <div id="footer">
-
-  </div>
   <!-- //footer -->
+  </div>
 </div>
 <!-- //wrap -->
 <script>
-  async function fetchHtmlAsText(url) {
+  async function fetchHtmlAsText(url){ // html 문서를 가져옴. 
     const response = await fetch(url);
     return await response.text();
   }
-  async function importPage(target) {
-    document.querySelector('#' + target).innerHTML = await fetchHtmlAsText(target + '.html');
+  async function importPage(target){
+    document.querySelector('#'+ target).innerHTML = await fetchHtmlAsText(target + '.html');
   }
   importPage('header');
   importPage('footer');

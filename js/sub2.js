@@ -1,76 +1,61 @@
-// sub2.js
-window.addEventListener('load' , () => {
-  
-
-
-
-const gnbMenu = document.querySelectorAll("nav.gnb>ul>li")
-const divs = document.querySelectorAll("nav.gnb>ul>li>div");
-const headerWrap = document.querySelector(".header_wrap");
-
-/* 주메뉴
-각 li에 마우스를 올리면 각 높이값 가져와서 풀다운 메뉴 내려오고 보여야 함,
-키보드 탭으로 움직여야 함 */
-
-for(let i=0; i<gnbMenu.length; i++){
-  gnbMenu[i].addEventListener('mouseover',e=>{
-    e.currentTarget.classList.add('on');
-    var ht = e.currentTarget.children[1].offsetHeight;
-    headerWrap.style.height = 70 + ht + "px";
-  })
-
-  gnbMenu[i].addEventListener('mouseout',e=>{
-    e.currentTarget.classList.remove('on');
-    headerWrap.style.height =70 + "px";
-  })
-}
-
-
-/* 검색박스 */ 
-// 검색 버튼 누르면 검색박스 보이고 닫기 누르면 검색박스 닫힘
-
-const btnSrch = document.querySelector('div.btn_srch');
-const srchWrap = document.querySelector("div.srch_wrap");
-const btnSrchClose = document.querySelector("a.btn_srch_close");
-
-btnSrch.addEventListener('click',e=>{
-  e.preventDefault();
-  srchWrap.classList.add('on');
-});
-btnSrchClose.addEventListener('click',e=>{
-  e.preventDefault();
-  srchWrap.classList.remove('on');
-})
-
-
-// top버튼
-// 클릭하면 스크롤이 맨 위로 올라감
-// 스크롤 내리면 top메뉴 .on해서 보이고
-// 일정 길이 이상 내려가면 position absolute로 변경
-
-const btnTop = document.querySelector(".btn_top");
-
-btnTop.addEventListener('click',e=>{
-  e.preventDefault();
-  window.scroll({
-    top:0,
-    left:0,
-    behavior:'smooth'
+window.addEventListener('load', ()=>{
+  // header
+  const menu = document.querySelectorAll(".gnb>ul>li");
+  const header = document.querySelector(".header_wrap");
+  // 메뉴동작
+  menu.forEach((el,i) =>{
+    el.addEventListener("mouseenter", e=>{
+      e.preventDefault();
+      activation(menu,i,"on");
+      getHeight(el.children[1],100);
+    });
+    el.children[0].addEventListener("focus", e=>{
+      e.preventDefault();
+      activation(menu,i,"on");
+      getHeight(el.children[1],100);
+    });
+    header.addEventListener("mouseleave", e=>{
+      for(let el of menu) el.classList.remove("on");
+      header.style.height = 70+"px";
+    });
+    el.children[0].addEventListener("blur", e=>{
+      for(let el of menu) el.classList.remove("on");
+      header.style.height = 70+"px";
+    });
   });
-});
+  
+  // 검색박스
+  const btnSrch = document.querySelector(".btn_srch");
+  const srchWrap = document.querySelector(".srch_wrap");
+  const btnSrchClose = document.querySelector(".btn_srch_close");
+  
+  btnSrch.addEventListener("click", e=>{
+    e.preventDefault();
+    srchWrap.classList.add("on");
+  });
+  btnSrchClose.addEventListener("click", e=>{
+    e.preventDefault();
+    srchWrap.classList.remove("on");
+  });
 
-window.addEventListener('scroll',e=>{
-  let scroll = document.querySelector('html').scrollTop;
-  console.log(scroll);
-  if(scroll>=200 && scroll<2800){
-    btnTop.classList.remove("on","ab");
-    btnTop.classList.add("on");
-  }else if(scroll>=2800){
-    btnTop.classList.add("ab");
-  }else{
-    btnTop.classList.remove("on","ab");
+  // top
+  // 클릭하면 스크롤이 0 
+  const toTop = document.querySelector("#footer .btns");
+
+  toTop.children[1].addEventListener("click", e=>{
+    e.preventDefault();
+    window.scroll({
+      top: 0,
+      behavior: "smooth"
+    });
+  });
+  
+  function activation(aa, idx, name){
+    for(let el of aa) el.classList.remove(name);
+    aa[idx].classList.add(name);
   }
-})
-
-
+  function getHeight(aa,i){
+    let height = aa.offsetHeight;
+    header.style.height = height+i+"px";
+  }
 })
